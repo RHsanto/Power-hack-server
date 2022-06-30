@@ -31,7 +31,8 @@ async function run() {
 //   res.send(bus);
 
 //  });
- // GET API REVIEWS
+
+ // GET BILLING API
  app.get('/billing-list', async (req,res)=>{
   const cursor = BillCollection.find({});
   const bus = await cursor.toArray();
@@ -39,52 +40,40 @@ async function run() {
 
  });
 
- 
-  // // GET SINGLE OFFERS
-  // app.get('/all-station/:id', async (req,res)=>{
-  //   const id = req.params.id;
-  //   const query = {_id: ObjectId(id)};
-  //   const booking = await RadioCollection.findOne(query)
-  // res.json(booking);
-  // });
-  
-  // // here put booking data
-  // app.post('/users', async (req,res) => {
-  //   const user = req.body;
-  //   const result = await UserCollection.insertOne(user);
-  //   res.json( result)
-  // })
-  // // here post station data
-  // app.post('/all-station', async (req,res) => {
-  //   const user = req.body;
-  //   const result = await RadioCollection.insertOne(user);
-  //   res.json( result)
-  // })
 
-//  //DELETE API 
-//  app.delete('/all-station/:id', async(req,res)=>{
-//   const id     = req.params.id;
-//   const query  = {_id:ObjectId(id)} ;
-//   const result = await RadioCollection.deleteOne(query)
-//   console.log(id,result);
-//   res.json(result);
-//  })
+  // here post station data
+  app.post('/add-billing', async (req,res) => {
+    const user = req.body;
+    const result = await BillCollection.insertOne(user);
+    res.json( result)
+  })
 
-  //  // UPDATE STATUS 
-  //  app.put('/all-station/:id', async(req,res)=>{
-  //   const body =req.body;
-  //   const id = req.params.id;
-  //   const filter ={_id: ObjectId(id)}
-  //   const option = {upsert : true};
-  //   const updateStatus ={
-  //     $set:{
-  //      name:body.name,
-  //      radio:body.radio
-  //     },
-  //   };
-  //   const result = await RadioCollection.updateOne(filter,updateStatus,option);
-  //   res.json(result)
-  // })
+ //DELETE API 
+ app.delete('/delete-billing/:id', async(req,res)=>{
+  const id     = req.params.id;
+  const query  = {_id:ObjectId(id)} ;
+  const result = await BillCollection.deleteOne(query)
+  console.log(id,result);
+  res.json(result);
+ })
+
+   // UPDATE STATUS 
+   app.put('/update-billing/:id', async(req,res)=>{
+    const body =req.body;
+    const id = req.params.id;
+    const filter ={_id: ObjectId(id)}
+    const option = {upsert : true};
+    const updateStatus ={
+      $set:{
+       name:body.name,
+       email:body.email,
+       phone:body.phone,
+       amount:body.amount,
+      },
+    };
+    const result = await BillCollection.updateOne(filter,updateStatus,option);
+    res.json(result)
+  })
 
   } 
   
