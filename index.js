@@ -35,9 +35,20 @@ async function run() {
  // GET BILLING API
  app.get('/billing-list', async (req,res)=>{
   const cursor = BillCollection.find({});
-  const bus = await cursor.toArray();
-  res.send(bus);
-
+  const page = req.query.page;
+  const size = parseInt(req.query.size);
+  const count = await cursor.count();
+  let bills;
+  if(page){
+    bills = await cursor.skip(page*size).limit(10).toArray();
+  }
+  else{
+    bills = await cursor.toArray();
+  }
+  res.send({
+    count, 
+    bills});
+  
  });
 
 
@@ -53,7 +64,6 @@ async function run() {
   const id     = req.params.id;
   const query  = {_id:ObjectId(id)} ;
   const result = await BillCollection.deleteOne(query)
-  console.log(id,result);
   res.json(result);
  })
 
