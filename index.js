@@ -1,5 +1,3 @@
-// billingInfo
-// billingList
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
@@ -21,16 +19,10 @@ async function run() {
     await client.connect();
     const database = client.db("billingInfo");
     const BillCollection = database.collection("billingList");
+    const UserCollection = database.collection("UserList");
     
    
 
-//  // GET API REVIEWS
-//  app.get('/users', async (req,res)=>{
-//   const cursor = UserCollection.find({});
-//   const bus = await cursor.toArray();
-//   res.send(bus);
-
-//  });
 
  // GET BILLING API
  app.get('/billing-list', async (req,res)=>{
@@ -56,6 +48,20 @@ async function run() {
   app.post('/add-billing', async (req,res) => {
     const user = req.body;
     const result = await BillCollection.insertOne(user);
+    res.json( result)
+  })
+
+
+  // here register 
+  app.post('/registration', async (req,res) => {
+    const user = req.body;
+    const result = await UserCollection.insertOne(user);
+    res.json( result)
+  })
+  // here register 
+  app.post('/login', async (req,res) => {
+    const user = req.body;
+    const result = await UserCollection.insertOne(user);
     res.json( result)
   })
 
