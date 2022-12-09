@@ -7,8 +7,8 @@ const cors = require('cors')
 const app =express();
 const port = process.env.PORT || 8000;
 
-//midalware
-app.use(cors());  
+//medal ware
+app.use(cors());   
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@mr-travel-app.aqkf7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
